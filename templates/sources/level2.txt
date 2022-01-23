@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 @app.route('/levels/level3')
-def levels(level):
+def level3():
     level3_password_hash = "d2a26cb195b5434b935b20319e5135535ba36005d174ead5bc60f55f487594f4"
 
     cookies = request.cookies.get('passwords')
@@ -18,7 +18,7 @@ def levels(level):
             if len(password) == 4 \
                and all(i in string.ascii_lowercase + string.ascii_uppercase + string.digits for i in password) \
                and sha256(password.encode()).hexdigest() == level3_password_hash:
-               
+
                 return render_template(f'levels/level3.html')
 
     return render_template('wrong_password.html')
