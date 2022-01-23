@@ -1,3 +1,4 @@
+import string
 from hashlib import sha256
 from flask import Flask, render_template, request
 
@@ -7,15 +8,17 @@ app = Flask(__name__)
 
 @app.route('/levels/level3')
 def levels(level):
-    # hint: the password is of length 4, and made of english lower case, upper case, and digits.
-
     level3_password_hash = "d2a26cb195b5434b935b20319e5135535ba36005d174ead5bc60f55f487594f4"
 
     cookies = request.cookies.get('passwords')
     if cookies:
         passwords = json.loads(cookies)
-        if "level3" in passwords and sha256(passwords["level3"].encode()).hexdigest() == level3_password_hash:
-            return render_template(f'levels/level3.html')
+        if "level3" in passwords:
+            password = passwords["level3"]
+            if all(i in string.ascii_lowercase + string.ascii_uppercase + string.digits for i in password) \
+                                                                                    and len(password) == 4 \
+                                          and sha256(password.encode()).hexdigest() == level3_password_hash:
+                return render_template(f'levels/level3.html')
 
     return render_template('wrong_password.html')
 
