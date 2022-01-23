@@ -6,11 +6,10 @@
         <meta charset="utf-8">
         <title>Level 4</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+        <script src="{{ url_for('static', filename='utils.js') }}"></script>
     </head>
 
     <body>
-        <script src="{{ url_for('static', filename='index.js') }}"></script>
-
         <h2>Level 4</h2>
 
         <form onsubmit="gotoLevel(event, 'level5')" action="javascript:void(0);">
