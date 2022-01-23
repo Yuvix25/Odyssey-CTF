@@ -15,9 +15,10 @@ def levels(level):
         passwords = json.loads(cookies)
         if "level3" in passwords:
             password = passwords["level3"]
-            if all(i in string.ascii_lowercase + string.ascii_uppercase + string.digits for i in password) \
-                                                                                    and len(password) == 4 \
-                                          and sha256(password.encode()).hexdigest() == level3_password_hash:
+            if len(password) == 4 \
+               and all(i in string.ascii_lowercase + string.ascii_uppercase + string.digits for i in password) \
+               and sha256(password.encode()).hexdigest() == level3_password_hash:
+               
                 return render_template(f'levels/level3.html')
 
     return render_template('wrong_password.html')
