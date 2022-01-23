@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+    <!-- Ignore everything in head, it won't help you in any level. -->
+    <head>
+        <meta charset="utf-8">
+        <title>Level 1</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    </head>
+
+    <body>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+        
+        <!-- First one is simple, just so that you get the hang of it, here's the password to level2: {{password}} -->
+        <h2>Level 1</h2>
+        <p>After you find it, place the password to level2 in the field bellow, and enter the next level.</p>
+
+        <form onsubmit="gotoLevel(event, 'level2')" action="javascript:void(0);">
+            <p>
+                <label for="password">Level2 Password:</label>
+                <input type="password" name="password" id="password" style="width: 400px;">
+            </p>
+            <p>
+                <input type="submit" value="Submit">
+            </p>
+        </form>
+
+    </body>
+</html>

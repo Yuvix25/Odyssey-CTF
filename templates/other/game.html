@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Game</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    </head>
+
+    <body>
+        <p style="margin-top: 0px;">{{message}}</p>
+        <div id="square" style="border-radius: {{radius}}; width: 100px; height: 100px; background-color: red;" onclick='var square = document.getElementById("square"); var color = "#" + Math.floor(Math.random() * 16777215).toString(16); square.style.backgroundColor = color;'></div>
+        <br>
+        <button onclick="document.getElementById('game').innerHTML = '';" style="background-color: white;  color: black;">Close that mind blowing game</button>
+    </body>
+</html>

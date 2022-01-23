@@ -1,0 +1,14 @@
+# Python3
+
+from hashlib import sha256
+
+
+password = the password you entered
+# hint: the password is of length 4, and made of english lower case, upper case, and digits.
+
+
+level3_password_hash = ""
+if sha256(password.encode()).hexdigest() == level3_password_hash:
+    print("The password is correct!")
+else:
+    print("Try better please, you are capable of more...")
