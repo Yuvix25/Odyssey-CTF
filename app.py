@@ -1,10 +1,8 @@
 import os
 import json
-import flask
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, abort, Response
+from flask import Flask, render_template, request, abort, Response
 from utils import *
 
-# Simple flask example:
 app = Flask(__name__)
 
 
@@ -81,4 +79,4 @@ def sources(source):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

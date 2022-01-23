@@ -1,14 +1,22 @@
-# Python3
-
 from hashlib import sha256
+from flask import Flask, render_template, request
 
 
-password = the password you entered
-# hint: the password is of length 4, and made of english lower case, upper case, and digits.
+app = Flask(__name__)
 
 
-level3_password_hash = ""
-if sha256(password.encode()).hexdigest() == level3_password_hash:
-    print("The password is correct!")
-else:
-    print("Try better please, you are capable of more...")
+@app.route('/levels/level3')
+def levels(level):
+    level3_password_hash = "d2a26cb195b5434b935b20319e5135535ba36005d174ead5bc60f55f487594f4"
+
+    cookies = request.cookies.get('passwords')
+    if cookies:
+        passwords = json.loads(cookies)
+        if "level3" in passwords and sha256(passwords["level3"].encode()).hexdigest() == level3_password_hash:
+            return render_template(f'levels/level3.html')
+
+    return render_template('wrong_password.html')
+
+
+if __name__ == '__main__':
+    app.run()
