@@ -7,6 +7,8 @@ app = Flask(__name__)
 
 @app.route('/levels/level3')
 def levels(level):
+    # hint: the password is of length 4, and made of english lower case, upper case, and digits.
+
     level3_password_hash = "d2a26cb195b5434b935b20319e5135535ba36005d174ead5bc60f55f487594f4"
 
     cookies = request.cookies.get('passwords')
