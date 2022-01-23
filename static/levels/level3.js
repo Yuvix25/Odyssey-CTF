@@ -8,6 +8,6 @@ function gotoGame() {
     }
 
     xhr.open('GET', '/game', true);
-    xhr.setRequestHeader('user-type', 'normal');
+    xhr.setRequestHeader('privileges', 'normal');
     xhr.send('');
 }

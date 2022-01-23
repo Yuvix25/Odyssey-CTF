@@ -1,3 +1,4 @@
+import os
 import json
 import flask
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, abort, Response
@@ -31,6 +32,9 @@ def levels(level):
     if '.html' in level:
         level = level.split('.html')[0]
     
+    if not os.path.isfile(f'templates/levels/{level}.html'):
+        abort(404)
+    
     print(level)
 
 
@@ -47,7 +51,7 @@ def levels(level):
 
 @app.route('/game')
 def game():
-    user = request.headers.get('user-type')
+    user = request.headers.get('privileges')
     message = "How cool is that?!? When you click the square it literally changes colors 😱😱😱"
     radius = "0%"
     if user.lower() == 'admin':
