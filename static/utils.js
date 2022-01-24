@@ -8,7 +8,7 @@ async function betterFetch(local_url) {
     }
 }
 
-function moveToPage(local_url) {
+function gotoPage(local_url) {
     if (location.href.includes('127.0.0.1')) {
         location.href = local_url;
     } else {
@@ -55,7 +55,7 @@ async function gotoLevel(event, level) {
         current_passwords[level] = pwd;
         setCookie('passwords', JSON.stringify(current_passwords), cookie_expiration_hours);
         
-        goToPage('/levels/' + level);
+        gotoPage('/levels/' + level);
     } else {
         alert(server_response.message);
     }
@@ -67,7 +67,7 @@ function goBack() {
     var level = document.title.split(' ')[1];
     level = parseInt(level);
 
-    goToPage('/levels/level' + (level - 1));
+    gotoPage('/levels/level' + (level - 1));
 }
 
 
