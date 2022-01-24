@@ -2,8 +2,10 @@ import os
 import json
 from flask import Flask, render_template, request, abort, Response
 from utils import *
+from mysql_intergration import *
 
 app = Flask(__name__)
+db = Database()
 
 
 @app.route('/')
@@ -47,7 +49,10 @@ def levels(level):
 
     return render_template('wrong_password.html')
 
-@app.route('/game')
+
+
+
+@app.route('/level3_game')
 def game():
     user = request.headers.get('privileges')
     message = "How cool is that?!? When you click the square it literally changes colors 😱😱😱"
@@ -58,6 +63,18 @@ def game():
 
     return render_template('/other/game.html', message=message, radius=radius)
 
+
+@app.route('/level4_validate_login')
+def validate_password():
+    query_params = request.args.to_dict()
+    if 'password' in query_params and 'username' in query_params:
+        password = query_params['password']
+        username = query_params['username']
+        result = db.validate_login(username, password)
+        if result:
+            return {'success': True, 'message': f"Correct! Indeed the password for '{username}' is '{result}'"}
+    
+    return {'success': False, 'message': 'Password is incorrect or username does not exist!'}
 
 
 

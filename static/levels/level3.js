@@ -7,7 +7,7 @@ function gotoGame() {
         }
     }
 
-    xhr.open('GET', '/game', true);
+    xhr.open('GET', '/level3_game', true);
     xhr.setRequestHeader('privileges', 'normal');
     xhr.send('');
 }

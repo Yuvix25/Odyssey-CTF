@@ -6,6 +6,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
+# Try to unlock level3:
 @app.route('/levels/level3')
 def level3():
     level3_password_hash = "d2a26cb195b5434b935b20319e5135535ba36005d174ead5bc60f55f487594f4"

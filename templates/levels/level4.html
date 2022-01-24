@@ -10,17 +10,22 @@
     </head>
 
     <body>
-        <h2>Level 4</h2>
+        <script src="{{ url_for('static', filename='levels/level4.js') }}"></script>
 
-        <form onsubmit="gotoLevel(event, 'level5')" action="javascript:void(0);">
+        <h2>Level 4</h2>
+        
+        <h3>Check if username and password are correct:</h3>
+        <form onsubmit="checkCorrect(event)" action="javascript:void(0);">
             <p>
-                <label for="password">Level5 Password:</label>
-                <input type="password" name="password" id="password" style="width: 400px;">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="text" name="password" id="password">
             </p>
             <p>
                 <input type="submit" value="Submit">
             </p>
         </form>
-
+        <p id="response"></p>
     </body>
 </html>
