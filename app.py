@@ -1,12 +1,13 @@
 import os
 import json
+from sre_constants import SUCCESS
+import requests
 from flask import Flask, render_template, request, abort, Response
 from utils import *
 from mysql_intergration import *
 
 app = Flask(__name__)
 db = Database()
-
 
 
 
@@ -63,7 +64,7 @@ def game():
     user = request.headers.get('privileges')
     message = "How cool is that?!? When you click the square it literally changes colors 😱😱😱"
     radius = "0%"
-    if user.lower() == 'admin':
+    if user and user.lower() == 'admin':
         message = "Here's your password you smart-aleck: " +  PASSWORDS['level4'] + ", and now since you're an admin you get a circllle!!! 😱😱😱"
         radius = "100%"
 
@@ -77,10 +78,22 @@ def validate_password():
         password = query_params['password']
         username = query_params['username']
         result = db.validate_login(username, password)
-        if result:
+        if result and result != 'Error':
             return {'success': True, 'message': f"Correct! Indeed the password for '{username}' is '{result}'"}
+        elif result == 'Error':
+            return {'success': False, 'message': 'Hmmm... Something broke. Try again later.'}
     
     return {'success': False, 'message': 'Password is incorrect or username does not exist!'}
+
+@app.route('/level5_streaming')
+def level5_streaming():
+    if check_level_privileges('level5', request):
+        if requests.get('http://ip-api.com/json/' + request.remote_addr).json()["Country"] != "Israel":
+            return {'success': True}
+        else:
+            return {'success': False, 'message': 'We are sorry, but our service is currently not supported in Israel.'}
+    
+    abort(403)
 
 
 

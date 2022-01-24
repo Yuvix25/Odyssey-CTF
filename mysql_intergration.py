@@ -34,10 +34,15 @@ class Database:
     def execute_read_only(self, query, params=None):
         try:
             self.mydb.commit()
-        except:
-            pass
-        self.mycursor.execute("SET TRANSACTION READ ONLY")
-        self.mycursor.execute(query, params)
+        except Exception as e:
+            print("First try:", e)
+        
+        try:
+            self.mycursor.execute("SET TRANSACTION READ ONLY")
+            self.mycursor.execute(query, params)
+        except Exception as e:
+            print("Second try:", e)
+            return "Error"
     
     def validate_login(self, username, password):
         sql = f'SELECT * FROM passwords WHERE username = "{username}" AND password = "{password}"'
