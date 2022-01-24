@@ -52,5 +52,6 @@ class Database:
         if result:
             sql = f'SELECT password FROM passwords WHERE username = "{username}"'
             self.execute_read_only(sql)
-            result = self.mycursor.fetchone()[0]
-            return result
+            result = self.mycursor.fetchone()
+            if result:
+                return result[0]

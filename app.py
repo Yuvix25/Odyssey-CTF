@@ -90,7 +90,7 @@ def validate_password():
 def level5_streaming():
     if check_level_privileges('level5', request):
         print(request.headers['X-Forwarded-For'])
-        if requests.get('http://ip-api.com/json/' + request.headers['X-Forwarded-For']).json()["Country"] != "Israel":
+        if requests.get('http://ip-api.com/json/' + request.headers['X-Forwarded-For']).json()["country"] != "Israel":
             return {'success': True}
         else:
             return {'success': False, 'message': 'We are sorry, but our service is currently not supported in Israel.'}
