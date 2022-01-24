@@ -85,11 +85,12 @@ def validate_password():
     
     return {'success': False, 'message': 'Password is incorrect or username does not exist!'}
 
+
 @app.route('/level5_streaming')
 def level5_streaming():
     if check_level_privileges('level5', request):
-        print(request.remote_addr)
-        if requests.get('http://ip-api.com/json/' + request.remote_addr).json()["Country"] != "Israel":
+        print(request.headers['X-Forwarded-For'])
+        if requests.get('http://ip-api.com/json/' + request.headers['X-Forwarded-For']).json()["Country"] != "Israel":
             return {'success': True}
         else:
             return {'success': False, 'message': 'We are sorry, but our service is currently not supported in Israel.'}
