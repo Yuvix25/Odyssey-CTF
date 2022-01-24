@@ -55,9 +55,14 @@ function goBack() {
 }
 
 
-function addNextLevelDiv() {
-    var level = document.title.split(' ')[1];
+function addNextLevelDiv(level) {
+    level = document.title.split(' ')[1];
     level = parseInt(level);
+    if (isNaN(level)) {
+        level = document.querySelector('meta[name="description"]').content.split(' ')[1];
+        level = parseInt(level);
+    }
+    
 
     var form = `
     <hr>

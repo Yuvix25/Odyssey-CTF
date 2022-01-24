@@ -1,10 +1,9 @@
 import os
 import json
-from sre_constants import SUCCESS
 import requests
 from flask import Flask, render_template, request, abort, Response
 from utils import *
-from mysql_intergration import *
+from sqlite_intergration import *
 
 app = Flask(__name__)
 db = Database()
@@ -54,7 +53,7 @@ def levels(level):
     elif check_level_privileges(level, request):
         return render_template(f'levels/{level}.html')
 
-    return render_template('wrong_password.html')
+    return render_template('wrong_password.html', level=f'Level {level[5:]}')
 
 
 
