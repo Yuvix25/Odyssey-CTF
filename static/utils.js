@@ -8,14 +8,6 @@ async function betterFetch(local_url) {
     }
 }
 
-function gotoPage(local_url) {
-    if (location.href.includes('127.0.0.1')) {
-        location.href = local_url;
-    } else {
-        location.href = 'https://odyssey-ctf.herokuapp.com' + local_url;
-    }
-}
-
 function setCookie(name, value, hours) {
     var expires = "";
     if (hours) {
@@ -55,7 +47,7 @@ async function gotoLevel(event, level) {
         current_passwords[level] = pwd;
         setCookie('passwords', JSON.stringify(current_passwords), cookie_expiration_hours);
         
-        gotoPage('/levels/' + level);
+        location.href = '/levels/' + level;
     } else {
         alert(server_response.message);
     }
@@ -67,7 +59,7 @@ function goBack() {
     var level = document.title.split(' ')[1];
     level = parseInt(level);
 
-    gotoPage('/levels/level' + (level - 1));
+    location.href = '/levels/level' + (level - 1);
 }
 
 
