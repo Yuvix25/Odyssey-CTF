@@ -1,5 +1,5 @@
 async function streamingService() {
-    var server_response = await (await better_fetch('/level5_streaming')).json();
+    var server_response = await (await betterFetch('/level5_streaming')).json();
     if (server_response.success) {
         document.getElementById('stream').innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="picture-in-picture" allowfullscreen></iframe>`;
     }

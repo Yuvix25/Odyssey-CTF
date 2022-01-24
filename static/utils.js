@@ -1,10 +1,18 @@
 // Ignore this file, just managing the level movememnt and stuff like that, nothing to do with the actual levels
 
-async function better_fetch(local_url) {
+async function betterFetch(local_url) {
     if (location.href.includes('127.0.0.1')) {
         return await fetch(local_url);
     } else {
         return await fetch('https://odyssey-ctf.herokuapp.com' + local_url);
+    }
+}
+
+function moveToPage(local_url) {
+    if (location.href.includes('127.0.0.1')) {
+        location.href = local_url;
+    } else {
+        location.href = 'https://odyssey-ctf.herokuapp.com' + local_url;
     }
 }
 
@@ -40,14 +48,14 @@ const cookie_expiration_hours = 24;
 async function gotoLevel(event, level) {
     var pwd = event.target.elements.password.value;
 
-    var server_response = await (await better_fetch('/check_level?level=' + level + '&password=' + pwd)).json();
+    var server_response = await (await betterFetch('/check_level?level=' + level + '&password=' + pwd)).json();
     if (server_response.success) {
         // save password in cookies:
         let current_passwords = JSON.parse(getCookie('passwords') || '{}');
         current_passwords[level] = pwd;
         setCookie('passwords', JSON.stringify(current_passwords), cookie_expiration_hours);
-
-        window.location.href = '/levels/' + level;
+        
+        goToPage('/levels/' + level);
     } else {
         alert(server_response.message);
     }
@@ -59,7 +67,7 @@ function goBack() {
     var level = document.title.split(' ')[1];
     level = parseInt(level);
 
-    location.href = '/levels/level' + (level - 1);
+    goToPage('/levels/level' + (level - 1));
 }
 
 
