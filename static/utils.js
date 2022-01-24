@@ -48,17 +48,15 @@ async function gotoLevel(event, level) {
 
 
 function goBack() {
-    var current_level = location.pathname.split('/')[2];
-    current_level = current_level.split('.')[0].substring(5);
+    var level = document.title.split(' ')[1];
+    level = parseInt(level);
 
-    var level_index = parseInt(current_level);
-    location.href = '/levels/level' + (level_index - 1);
+    location.href = '/levels/level' + (level - 1);
 }
 
 
 function addNextLevelDiv() {
-    var level = location.pathname.split('/')[2];
-    level = level.split('.')[0].substring(5);
+    var level = document.title.split(' ')[1];
     level = parseInt(level);
 
     var form = `
