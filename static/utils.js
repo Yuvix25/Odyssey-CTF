@@ -4,7 +4,7 @@ async function better_fetch(local_url) {
     if (location.href.includes('127.0.0.1')) {
         return await fetch(local_url);
     } else {
-        return await fetch('https://odyssey-ctf.herokuapp.com' + local_url);
+        return await fetch('https://odyssey-ctf.herokuapp.com' + local_url, {mode: 'no-cors'});
     }
 }
 
@@ -64,18 +64,21 @@ function goBack() {
 
 
 function addNextLevelDiv(level) {
+    var next = true;
     level = document.title.split(' ')[1];
     level = parseInt(level);
+
     if (isNaN(level)) {
         level = document.querySelector('meta[name="description"]').content.split(' ')[1];
         level = parseInt(level) - 1;
+        next = false;
     }
     
 
     var form = `
     <hr>
     <div style="position: absolute; bottom: 50px;">
-        <h2>Next Level:</h2>
+        <h2>${next ? 'Next' : 'Current'} Level:</h2>
         <form onsubmit="gotoLevel(event, 'level${level+1}')" action="javascript:void(0);">
             <p>
                 <label for="password">Level${level+1} Password:</label>

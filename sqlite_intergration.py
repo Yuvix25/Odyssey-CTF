@@ -9,7 +9,7 @@ EXAMPLE_PASSWORDS = {
 
 class Database:
     def __init__(self):
-        self.db = sqlite3.connect('odysseyctf.db')
+        self.db = sqlite3.connect('odysseyctf.db', check_same_thread=False)
 
         self.cursor = self.db.cursor()
         self.cursor.execute("CREATE TABLE IF NOT EXISTS passwords (username VARCHAR(255), password VARCHAR(255))")
@@ -25,14 +25,14 @@ class Database:
 
         print("MySQL connection is ready")
     
-    def execute_read_only(self, query, params=None):
+    def execute_read_only(self, query):
         try:
             self.db.commit()
         except Exception as e:
             print("First try:", e)
         
         
-        self.cursor.execute(query, params)
+        self.cursor.execute(query)
         self.db.rollback()
 
     
