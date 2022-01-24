@@ -3,7 +3,7 @@ async function streamingService() {
     if (window.location.href.includes('127.0.0.1')) {
         url = '/level5_streaming';
     } else {
-        url = 'odyssey-ctf.herokuapp.com/level5_streaming';
+        url = 'https://odyssey-ctf.herokuapp.com/level5_streaming';
     }
     var server_response = await (await fetch(url)).json();
     if (server_response.success) {
