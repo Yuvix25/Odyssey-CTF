@@ -1,5 +1,13 @@
 // Ignore this file, just managing the level movememnt and stuff like that, nothing to do with the actual levels
 
+async function better_fetch(local_url) {
+    if (location.href.includes('127.0.0.1')) {
+        return await fetch(local_url);
+    } else {
+        return await fetch('https://odyssey-ctf.herokuapp.com' + local_url);
+    }
+}
+
 function setCookie(name, value, hours) {
     var expires = "";
     if (hours) {
@@ -32,7 +40,7 @@ const cookie_expiration_hours = 24;
 async function gotoLevel(event, level) {
     var pwd = event.target.elements.password.value;
 
-    var server_response = await (await fetch('/check_level?level=' + level + '&password=' + pwd)).json();
+    var server_response = await (await better_fetch('/check_level?level=' + level + '&password=' + pwd)).json();
     if (server_response.success) {
         // save password in cookies:
         let current_passwords = JSON.parse(getCookie('passwords') || '{}');
@@ -60,7 +68,7 @@ function addNextLevelDiv(level) {
     level = parseInt(level);
     if (isNaN(level)) {
         level = document.querySelector('meta[name="description"]').content.split(' ')[1];
-        level = parseInt(level);
+        level = parseInt(level) - 1;
     }
     
 
