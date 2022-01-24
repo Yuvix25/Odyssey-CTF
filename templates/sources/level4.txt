@@ -1,0 +1,51 @@
+import mysql.connector
+from flask import Flask, render_template, request
+
+class Database:
+    def __init__(self):
+        self.mydb = mysql.connector.connect(
+            host="<censored>",
+            user="<censored>",
+            passwd="<censored>",
+        )
+
+        self.mycursor = self.mydb.cursor(buffered=True)
+        self.mycursor.execute("USE <censored>")
+
+        self.mydb.commit()
+    
+    def validate_login(self, username, password):
+        sql = f'SELECT * FROM passwords WHERE username = "{username}" AND password = "{password}"'
+        self.mycursor.execute(sql)
+        result = self.mycursor.fetchone() is not None
+
+        if result:
+            sql = f'SELECT password FROM passwords WHERE username = "{username}"'
+            self.mycursor.execute(sql)
+            result = self.mycursor.fetchone()[0]
+            return result
+
+
+
+app = Flask(__name__)
+db = Database()
+
+
+
+# Check if username and password appear in the mysql db
+@app.route('/level4_validate_login')
+def validate_password():
+    query_params = request.args.to_dict()
+    if 'password' in query_params and 'username' in query_params:
+        password = query_params['password']
+        username = query_params['username']
+        result = db.validate_login(username, password)
+        if result:
+            return {'success': True, 'message': f"Correct! Indeed the password for '{username}' is '{result}'"}
+    
+    return {'success': False, 'message': 'Password is incorrect or username does not exist!'}
+
+
+
+if __name__ == '__main__':
+    app.run()

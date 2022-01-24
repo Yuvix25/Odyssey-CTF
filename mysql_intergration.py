@@ -13,7 +13,6 @@ class Database:
             host="db4free.net",
             user="odysseyctf",
             passwd="uvQvD5K6@fHt",
-            
         )
 
         self.mycursor = self.mydb.cursor(buffered=True)
@@ -30,7 +29,7 @@ class Database:
 
         self.mydb.commit()
 
-        print(self.mycursor.rowcount, "record inserted.")
+        print("MySQL connection is ready")
     
     def execute_read_only(self, query, params=None):
         try:
