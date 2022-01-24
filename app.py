@@ -2,10 +2,12 @@ import os
 import json
 import requests
 from flask import Flask, render_template, request, abort, Response
+from flask_cors import CORS, cross_origin
 from utils import *
 from sqlite_intergration import *
 
 app = Flask(__name__)
+CORS(app)
 db = Database()
 
 
@@ -25,6 +27,7 @@ def index():
 
 
 @app.route('/check_level')
+@cross_origin()
 def check_level():
     query_params = request.args.to_dict()
 
@@ -39,6 +42,7 @@ def check_level():
 
 
 @app.route('/levels/<level>')
+@cross_origin()
 def levels(level):
     level = level.split('.')[0]
     
@@ -86,6 +90,7 @@ def validate_password():
 
 
 @app.route('/level5_streaming')
+@cross_origin()
 def level5_streaming():
     if check_level_privileges('level5', request):
         print(request.headers['X-Forwarded-For'])

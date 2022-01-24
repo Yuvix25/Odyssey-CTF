@@ -1,4 +1,5 @@
 Flask
+flask_corsa
 Jinja2
 gunicorn
 mysql-connector-python

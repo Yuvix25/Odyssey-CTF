@@ -4,7 +4,7 @@ async function better_fetch(local_url) {
     if (location.href.includes('127.0.0.1')) {
         return await fetch(local_url);
     } else {
-        return await fetch('https://odyssey-ctf.herokuapp.com' + local_url, {mode: 'no-cors'});
+        return await fetch('https://odyssey-ctf.herokuapp.com' + local_url);
     }
 }
 
