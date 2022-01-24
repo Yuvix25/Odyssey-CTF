@@ -8,6 +8,17 @@ app = Flask(__name__)
 db = Database()
 
 
+
+
+def check_level_privileges(level, request):
+    cookies = request.cookies.get('passwords')
+    if cookies:
+        passwords = json.loads(cookies)
+        if level in passwords and check_password(level, passwords[level]):
+            return True
+    return False
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -29,8 +40,7 @@ def check_level():
 
 @app.route('/levels/<level>')
 def levels(level):
-    if '.html' in level:
-        level = level.split('.html')[0]
+    level = level.split('.')[0]
     
     if not os.path.isfile(f'templates/levels/{level}.html'):
         abort(404)
@@ -40,12 +50,8 @@ def levels(level):
 
     if level == 'level1':
         return render_template(f'levels/{level}.html', password=PASSWORDS['level2'])
-    else:
-        cookies = request.cookies.get('passwords')
-        if cookies:
-            passwords = json.loads(cookies)
-            if level in passwords and check_password(level, passwords[level]):
-                return render_template(f'levels/{level}.html')
+    elif check_level_privileges(level, request):
+        return render_template(f'levels/{level}.html')
 
     return render_template('wrong_password.html')
 
@@ -80,17 +86,19 @@ def validate_password():
 
 @app.route('/sources/<source>')
 def sources(source):
-    if '.txt' in source:
-        source = source.split('.txt')[0]
+    source = source.split('.')[0]
     
-    cookies = request.cookies.get('passwords')
-    if cookies:
-        passwords = json.loads(cookies)
-        if source in passwords and check_password(source, passwords[source]):
-            file_content = open(f'{app.template_folder}/sources/{source}.txt').read()
+    if check_level_privileges(source, request):
+        path = f'{app.template_folder}/sources/{source}.txt'
+        if os.path.isfile(path):
+            file_content = open(path).read()
+
             if source == 'level2':
                 file_content = file_content.replace('""', f'"{do_sha256(PASSWORDS["level3"])}"')
+
             return Response(file_content, mimetype='text/plain')
+        else:
+            abort(404)
 
     abort(403)
 
