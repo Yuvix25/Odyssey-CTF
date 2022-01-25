@@ -43,9 +43,9 @@ async function gotoLevel(event, level) {
     var server_response = await (await betterFetch('/check_level?level=' + level + '&password=' + pwd)).json();
     if (server_response.success) {
         // save password in cookies:
-        let current_passwords = JSON.parse(getCookie('passwords') || '{}');
-        current_passwords[level] = pwd;
-        setCookie('passwords', JSON.stringify(current_passwords), cookie_expiration_hours);
+        // let current_passwords = JSON.parse(getCookie('passwords') || '{}');
+        // current_passwords[level] = pwd;
+        // setCookie('passwords', JSON.stringify(current_passwords), cookie_expiration_hours);
         
         location.href = '/levels/' + level;
     } else {

@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from flask import Flask, render_template, request, abort, Response
+from flask import Flask, Response, render_template, abort, jsonify, request
 from flask_cors import CORS, cross_origin
 from utils import *
 from sqlite_intergration import *
@@ -36,7 +36,15 @@ def check_level():
         level = query_params['level']
 
         if check_password(level, password):
-            return {'success': True}
+            ret = jsonify({'success': True})
+            passwords = request.cookies.get('passwords')
+            if passwords:
+                passwords = json.loads(passwords)
+            else:
+                passwords = {}
+            passwords[level] = password
+            ret.set_cookie('passwords', json.dumps(passwords))
+            return ret
     
     return {'success': False, 'message': 'Invalid password! Come back later when you got some learning inside that primitive brain of yours.'}
 
