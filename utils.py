@@ -49,10 +49,11 @@ PASSWORDS = {
 # clear captures folder:
 
 for file in os.listdir('./captures'):
-    try:
-        os.remove(f'./captures/{file}')
-    except:
-        print("Couldn't remove image:", file)
+    if file.endswith('.png'):
+        try:
+            os.remove(f'./captures/{file}')
+        except:
+            print("Couldn't remove image:", file)
 
 
 def check_password(level, password):
