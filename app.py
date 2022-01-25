@@ -6,7 +6,7 @@ from flask import Flask, Response, render_template, abort, jsonify, send_file, a
 from sympy import capture
 from utils import *
 from sqlite_intergration import *
-from capture import capture_url, driver
+from capture import capture_url
 
 app = Flask(__name__)
 db = Database()
@@ -122,7 +122,7 @@ def level6_capture():
                 if img_path:
                     return {'success': True, 'url': img_path}
                 else:
-                    return {'success': False, 'message': f'Couldn\'t capture {url}. Try again later or check if you typed it wrong.'}
+                    return {'success': False, 'message': f'Couldn\'t capture {url}. Try again later or check if you typed it wrong (maybe http:// instead of https://?).'}
             else:
                 return {'success': False, 'message': 'URL must start with http:// or https://'}
         else:
