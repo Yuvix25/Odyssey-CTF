@@ -134,7 +134,7 @@ def capture(file):
     file = './captures/' + file
 
     if check_level_privileges('level6', request):
-        if os.path.isfile(file):
+        if os.path.isfile(file) and file.endswith('.png'):
 
             @after_this_request
             def delete_file(response):
