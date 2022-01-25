@@ -103,7 +103,7 @@ def level5_streaming():
     if check_level_privileges('level5', request):
         print(request.headers['X-Forwarded-For'])
         if requests.get('http://ip-api.com/json/' + request.headers['X-Forwarded-For']).json()["country"] != "Israel":
-            return {'success': True, 'url': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'message': PASSWORDS['level5']}
+            return {'success': True, 'url': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'message': f"Fine. Here you go: {PASSWORDS['level5']}"}
         else:
             return {'success': False, 'message': 'We are sorry, but our service is currently not supported in Israel.'}
     
