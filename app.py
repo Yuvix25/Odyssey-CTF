@@ -117,14 +117,14 @@ def level6_capture():
         query_params = request.args.to_dict()
         if 'url' in query_params:
             url = query_params['url']
-            if url.startswith('http'):
+            if url.startswith('http') and '0.0.0.0' not in url:
                 img_path = capture_url(url)
                 if img_path:
                     return {'success': True, 'url': img_path}
                 else:
                     return {'success': False, 'message': f'Couldn\'t capture {url}. Try again later or check if you typed it wrong (maybe http:// instead of https://?).'}
             else:
-                return {'success': False, 'message': 'URL must start with http:// or https://'}
+                return {'success': False, 'message': 'Invalid URL! (maybe you forgot http:// or https://?)'}
         else:
             return {'success': False, 'message': 'URL is missing!'}
 
