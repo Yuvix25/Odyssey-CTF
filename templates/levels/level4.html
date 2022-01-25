@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    <!-- Ignore everything in head, it won't help you in any level. -->
+    <!-- Ignore everything in <head>, it won't help you in any level. -->
     <head>
         <meta charset="utf-8">
         <title>Level 4</title>
@@ -18,15 +18,11 @@
 
         <h3>Check if username and password are correct:</h3>
         <form onsubmit="checkCorrect(event)" action="javascript:void(0);">
-            <p>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="banana23" required>
-                <label for="password">Password:</label>
-                <input type="text" name="password" id="password" value="password1234">
-            </p>
-            <p>
-                <input type="submit" value="Submit">
-            </p>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="banana23" required>
+            <label for="password">Password:</label>
+            <input type="text" name="password" id="password" value="password1234">
+            <input type="submit" value="Submit">
         </form>
         <p id="response"></p>
     </body>

@@ -1,9 +1,12 @@
 import os
 import json
+import time
 import requests
-from flask import Flask, Response, render_template, abort, jsonify, request
+from flask import Flask, Response, render_template, abort, jsonify, send_file, after_this_request, request
+from sympy import capture
 from utils import *
 from sqlite_intergration import *
+from capture import capture_url, driver
 
 app = Flask(__name__)
 db = Database()
@@ -59,6 +62,8 @@ def levels(level):
     if level == 'level1':
         return render_template(f'levels/{level}.html', password=PASSWORDS['level2'])
     elif check_level_privileges(level, request):
+        if level == 'level7':
+            return render_template(f'levels/{level}.html', password=PASSWORDS['level7'])
         return render_template(f'levels/{level}.html')
 
     return render_template('wrong_password.html', level=f'Level {level[5:]}')
@@ -104,6 +109,46 @@ def level5_streaming():
     
     abort(403)
 
+@app.route('/level6_capture')
+def level6_capture():
+    if check_level_privileges('level6', request):
+        query_params = request.args.to_dict()
+        if 'url' in query_params:
+            url = query_params['url']
+            if url.startswith('http'):
+                img_path = capture_url(url)
+                if img_path:
+                    return {'success': True, 'url': img_path}
+                else:
+                    return {'success': False, 'message': f'Couldn\'t capture {url}. Try again later or check if you typed it wrong.'}
+            else:
+                return {'success': False, 'message': 'URL must start with http:// or https://'}
+        else:
+            return {'success': False, 'message': 'URL is missing!'}
+
+    
+    abort(403)
+
+@app.route('/captures/<file>')
+def capture(file):
+    file = './captures/' + file
+
+    if check_level_privileges('level6', request):
+        if os.path.isfile(file):
+
+            @after_this_request
+            def delete_file(response):
+                try:
+                    os.remove(file)
+                except:
+                    pass
+                return response
+
+            return send_file(file, mimetype='image/png')
+        else:
+            abort(404)
+    
+    abort(403)
 
 
 @app.route('/sources/<source>')

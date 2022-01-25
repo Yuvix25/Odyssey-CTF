@@ -1,3 +1,4 @@
+import os
 import random
 import string
 from hashlib import sha256
@@ -42,8 +43,16 @@ PASSWORDS = {
     "level4": "5b2zOzIiNFeh2Cv5GKkxZggZO1EazxLz",
     "level5": "uX0ffyrHStMzUDkEoLu6PcfcDlZCAQc1",
     "level6": "aaa0djvGgwmdyDwM2YR432xEIJgvT61F",
+    "level7": "9DbTv",
 }
 
+# clear captures folder:
+
+for file in os.listdir('./captures'):
+    try:
+        os.remove(f'./captures/{file}')
+    except:
+        print("Couldn't remove image:", file)
 
 
 def check_password(level, password):

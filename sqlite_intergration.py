@@ -23,7 +23,7 @@ class Database:
 
         self.db.commit()
 
-        print("SQLite connection is ready")
+        print("SQLite ready.")
     
     def execute_read_only(self, query):
         try:

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-    <!-- Ignore everything in head, it won't help you in any level. -->
+    <!-- Ignore everything in <head>, it won't help you in any level. -->
     <head>
         <meta charset="utf-8">
         <title>Level 6</title>
@@ -10,8 +10,16 @@
     </head>
 
     <body>
-        <!-- <script src="{{ url_for('static', filename='levels/level6.js') }}"></script> -->
+        <script src="{{ url_for('static', filename='levels/level6.js') }}"></script>
 
         <h2>Level 6</h2>
+        <form onsubmit="urlCapture(event)" action="javascript:void(0);">
+            <label for="url">Capture URL:</label>
+            <input type="text" id="url" name="url" style="width: 400px;">
+            <input type="submit" value="Capture">
+        </form>
+        <p id="message"></p>
+        <h3>Result:</h3>
+        <img id='img' width="500"></img>
     </body>
 </html>

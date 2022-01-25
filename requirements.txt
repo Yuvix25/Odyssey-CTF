@@ -4,3 +4,4 @@ Jinja2
 gunicorn
 mysql-connector-python
 requests
+selenium
