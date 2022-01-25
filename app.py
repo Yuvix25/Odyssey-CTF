@@ -102,10 +102,10 @@ def validate_password():
 def level5_streaming():
     if check_level_privileges('level5', request):
         print(request.headers['X-Forwarded-For'])
-        if requests.get('http://ip-api.com/json/' + request.headers['X-Forwarded-For']).json()["country"] == "Belgium":
+        if requests.get('http://ip-api.com/json/' + request.headers['X-Forwarded-For']).json()["country"] == "Italy":
             return {'success': True, 'url': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'message': f"Fine. Here you go: {PASSWORDS['level6']}"}
         else:
-            return {'success': False, 'message': 'We are sorry, but our service currently only works in Belgium.'}
+            return {'success': False, 'message': 'We are sorry, but our service currently only works in Italy.'}
     
     abort(403)
 
