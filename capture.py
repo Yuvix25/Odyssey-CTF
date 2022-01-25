@@ -36,4 +36,5 @@ def capture_url(url):
     
     path = '/captures/' + random_english_digits(10) + '.png'
     res = driver.save_screenshot('.' + path)
+    driver.close()
     return path
