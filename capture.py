@@ -31,7 +31,8 @@ def capture_url(url):
     httpd_url = url.replace('http://', 'https://')
     if httpd_url.startswith('https://127.0.0.1') or httpd_url.startswith('https://localhost') or httpd_url.startswith('https://0.0.0.0'):
         passwords_to_7 = {lvl:PASSWORDS[lvl] for lvl in PASSWORDS if lvl <= 'level7' and len(lvl) == 6}
-        driver.add_cookie({'name': 'passwords', 'value': json.dumps(passwords_to_7)})
+        domain = httpd_url.split('/')[2]
+        driver.add_cookie({'name': 'passwords', 'value': json.dumps(passwords_to_7), 'domain': domain})
         driver.get(url)
     
     path = '/captures/' + random_english_digits(10) + '.png'
