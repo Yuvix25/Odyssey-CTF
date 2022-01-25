@@ -13,11 +13,12 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument("--window-size=1280,720")
 chrome_options.add_argument("--hide-scrollbars")
 
-if os.path.exists(GOOGLE_CHROME_PATH):
+if os.path.isfile('./chromedriver.exe'):
+    driver = webdriver.Chrome(executable_path='./chromedriver.exe', chrome_options=chrome_options)
+else:
     chrome_options.binary_location = GOOGLE_CHROME_PATH
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
-else:
-    driver = webdriver.Chrome(executable_path='./chromedriver.exe', chrome_options=chrome_options)
+    
 
 print("Selenium ready.")
 
