@@ -23,11 +23,15 @@ else:
 print("Selenium ready.")
 
 def capture_url(url):
-    driver.get(url)
+    try:
+        driver.get(url)
+    except:
+        return None
     
     httpd_url = url.replace('http://', 'https://')
-    if httpd_url.startswith('https://127.0.0.1') or httpd_url.startswith('https://localhost'):
-        driver.add_cookie({'name': 'passwords', 'value': json.dumps(PASSWORDS)})
+    if httpd_url.startswith('https://127.0.0.1') or httpd_url.startswith('https://localhost') or httpd_url.startswith('https://0.0.0.0'):
+        passwords_to_7 = {lvl:PASSWORDS[lvl] for lvl in PASSWORDS if lvl <= 'level7' and len(lvl) == 6}
+        driver.add_cookie({'name': 'passwords', 'value': json.dumps(passwords_to_7)})
         driver.get(url)
     
     path = '/captures/' + random_english_digits(10) + '.png'

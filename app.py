@@ -24,7 +24,9 @@ def check_level_privileges(level, request):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # get the port heroku is running on:
+    port = os.environ.get('PORT', 5000)
+    return render_template('index.html', port=port)
 
 
 @app.route('/check_level')
