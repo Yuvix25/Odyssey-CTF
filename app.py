@@ -14,11 +14,14 @@ db = Database()
 
 
 def check_level_privileges(level, request):
-    if 'remote_addr' not in request.__dict__ and int(level[5:]) <= 7:
-        # user is the server
-        print('servre is running locally')
-    elif request.remote_addr.startswith('127.') or request.remote_addr.startswith('192.168.') or request.remote_addr.startswith('10.'):
-        print('user is running locally')
+    if 'X-Forwarded-For' not in request.headers:
+        # server is running locally
+        print("X-Forwarded-For not found in request headers")
+        pass
+    elif int(level[5:]) <= 7:
+        print("X-Forwarded-For found in request headers")
+        print(request.headers['X-Forwarded-For'])
+        # user is running locally
         return True
 
     cookies = request.cookies.get('passwords')
