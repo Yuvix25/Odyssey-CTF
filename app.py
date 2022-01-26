@@ -16,10 +16,10 @@ db = Database()
 def check_level_privileges(level, request):
     if 'remote_addr' not in request.__dict__ and int(level[5:]) <= 7:
         # user is the server
-        print('user is the server')
+        print('servre is running locally')
+    elif request.remote_addr.startswith('127.') or request.remote_addr.startswith('192.168.') or request.remote_addr.startswith('10.'):
+        print('user is running locally')
         return True
-    print('user is not the server')
-    print(request.remote_addr)
 
     cookies = request.cookies.get('passwords')
     if cookies:
