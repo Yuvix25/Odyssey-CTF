@@ -4,5 +4,6 @@ captures/*.png
 
 *.db
 *.exe
+*.bat
 
 test.py

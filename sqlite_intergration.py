@@ -29,7 +29,7 @@ class Database:
         try:
             self.db.commit()
         except Exception as e:
-            print("First try:", e)
+            print(e)
         
         
         self.cursor.execute(query)
