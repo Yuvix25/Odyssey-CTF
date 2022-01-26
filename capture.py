@@ -19,16 +19,13 @@ def get_webdriver():
     else:
         chrome_options.binary_location = GOOGLE_CHROME_PATH
         driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+    driver.set_page_load_timeout(5)
     return driver
     
 
 print("Selenium ready.")
 
 def capture_url(url):
-    if url.startswith('https://127.'):
-        time.sleep(0.7) # just so that it won't seem too fast
-        return None
-    
     driver = get_webdriver()
     try:
         driver.get(url)
