@@ -19,6 +19,7 @@ def check_level_privileges(level, request):
         print('user is the server')
         return True
     print('user is not the server')
+    print(request.remote_addr)
 
     cookies = request.cookies.get('passwords')
     if cookies:
