@@ -14,13 +14,7 @@ db = Database()
 
 
 def check_level_privileges(level, request):
-    if 'X-Forwarded-For' not in request.headers:
-        # server is running locally
-        print("X-Forwarded-For not found in request headers")
-        pass
-    elif int(level[5:]) <= 7:
-        print("X-Forwarded-For found in request headers")
-        print(request.headers['X-Forwarded-For'])
+    if 'X-Forwarded-For' not in request.headers and int(level[5:]) <= 7:
         # user is running locally
         return True
 
