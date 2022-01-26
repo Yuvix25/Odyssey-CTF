@@ -16,7 +16,9 @@ db = Database()
 def check_level_privileges(level, request):
     if 'remote_addr' not in request.__dict__ and int(level[5:]) <= 7:
         # user is the server
+        print('user is the server')
         return True
+    print('user is not the server')
 
     cookies = request.cookies.get('passwords')
     if cookies:
