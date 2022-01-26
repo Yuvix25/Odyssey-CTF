@@ -1,7 +1,7 @@
 import os
 import json
-import time
 import requests
+from hashlib import sha256
 from flask import Flask, Response, render_template, abort, jsonify, send_file, after_this_request, request
 from sympy import capture
 from utils import *
@@ -166,7 +166,9 @@ def sources(source):
             file_content = open(path).read()
 
             if source == 'level2':
-                file_content = file_content.replace('""', f'"{do_sha256(PASSWORDS["level3"])}"')
+                # password_hash=sha256(LEVEL3_SALT + PASSWORDS['level3'].encode('utf-8')).hexdigest(), salt=LEVEL3_SALT.__repr__()
+                file_content = file_content.replace('"hash"', f'"{sha256(LEVEL3_SALT + PASSWORDS["level3"].encode()).hexdigest()}"')
+                file_content = file_content.replace('"salt"', f'{LEVEL3_SALT.__repr__()}')
 
             return Response(file_content, mimetype='text/plain')
         else:

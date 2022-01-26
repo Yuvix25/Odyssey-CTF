@@ -46,6 +46,11 @@ PASSWORDS = {
     "level7": "9DbTv",
 }
 
+def bitstring_to_bytes(s):
+    return int(s, 2).to_bytes((len(s) + 7) // 8, byteorder='big')
+
+LEVEL3_SALT = bitstring_to_bytes("10111111010000100110101111100101")
+
 # clear captures folder:
 
 for file in os.listdir('./captures'):
