@@ -1,3 +1,4 @@
+import os
 import sqlite3
 
 EXAMPLE_PASSWORDS = {
@@ -22,6 +23,13 @@ class Database:
             self.cursor.execute(sql)
 
         self.db.commit()
+
+        # reopen in read only mode:
+        self.db.close()
+
+        here = os.path.dirname(os.path.abspath(__file__))
+        self.db = sqlite3.connect(f'file:{here}/odysseyctf.db?mode=ro', uri=True, check_same_thread=False)
+        self.cursor = self.db.cursor()
 
         print("SQLite ready.")
     
