@@ -39,7 +39,6 @@ class Database:
         except Exception as e:
             print(e)
         
-        
         self.cursor.execute(query)
         self.db.rollback()
 

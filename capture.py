@@ -1,7 +1,7 @@
 import os
-import json
+import time
 from selenium import webdriver
-from utils import random_english_digits, PASSWORDS
+from utils import random_english_digits
 
 GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
 CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
@@ -25,6 +25,10 @@ def get_webdriver():
 print("Selenium ready.")
 
 def capture_url(url):
+    if url.startswith('https://127.'):
+        time.sleep(0.7) # just so that it won't seem too fast
+        return None
+    
     driver = get_webdriver()
     try:
         driver.get(url)
@@ -32,14 +36,7 @@ def capture_url(url):
         print(e)
         return None
     
-    httpd_url = url.replace('http://', 'https://')
-    if httpd_url.startswith('https://127.0.0.1') or httpd_url.startswith('https://localhost') or httpd_url.startswith('https://0.0.0.0'):
-        passwords_to_7 = {lvl:PASSWORDS[lvl] for lvl in PASSWORDS if lvl <= 'level7' and len(lvl) == 6}
-        domain = httpd_url.split('/')[2].split(':')[0]
-        # driver.add_cookie({'name': 'passwords', 'value': json.dumps(passwords_to_7), 'domain': domain})
-        # driver.get(url)
-    
     path = '/captures/' + random_english_digits(10) + '.png'
-    res = driver.save_screenshot('.' + path)
+    driver.save_screenshot('.' + path)
     driver.close()
     return path
