@@ -69,3 +69,15 @@ def check_password(level, password):
         return False
     
     return PASSWORDS[level] == password
+
+
+# Table is:
+# 0
+# 1 2
+# 3 4 5
+# 6 7 8 9
+# ...
+def level7_table(x, y):
+    return x * (x + 1) // 2 + y
+
+# print(level7_table(6913374202222, 420691337222)) -> 23897371429978214853306975

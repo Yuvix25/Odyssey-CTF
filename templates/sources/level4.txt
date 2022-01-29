@@ -1,6 +1,12 @@
 import mysql.connector
 from flask import Flask, render_template, request
 
+EXAMPLE_PASSWORDS = {
+    ...,
+    "level5": "<censored>",
+    ...,
+}
+
 class Database:
     def __init__(self):
         self.mydb = mysql.connector.connect(
@@ -11,6 +17,10 @@ class Database:
 
         self.mycursor = self.mydb.cursor(buffered=True)
         self.mycursor.execute("USE <censored>")
+
+        for username, password in EXAMPLE_PASSWORDS.items():
+            sql = f"INSERT INTO passwords (username, password) VALUES ('{username}', '{password}')"
+            self.mycursor.execute(sql)
 
         self.mydb.commit()
     

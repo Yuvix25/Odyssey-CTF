@@ -44,6 +44,9 @@ class Database:
 
     
     def validate_login(self, username, password):
+        username = username.lower()
+        if username not in EXAMPLE_PASSWORDS:
+            return None
         sql = f'SELECT * FROM passwords WHERE username = "{username}" AND password = "{password}"'
         self.execute_read_only(sql)
         result = self.cursor.fetchone() is not None

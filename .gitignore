@@ -6,4 +6,5 @@ captures/*.png
 *.exe
 *.bat
 
+downloads/summaries/
 test.py

@@ -2,8 +2,7 @@ import os
 import json
 import requests
 from hashlib import sha256
-from flask import Flask, Response, render_template, abort, jsonify, send_file, after_this_request, request
-from sympy import capture
+from flask import Flask, Response, render_template, abort, jsonify, send_file, after_this_request, send_from_directory, request
 from utils import *
 from sqlite_intergration import *
 from capture import capture_url
@@ -11,6 +10,7 @@ from capture import capture_url
 app = Flask(__name__)
 db = Database()
 
+DOWNLOADS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)).replace('\\', '/'), 'downloads/').replace('\\', '/')
 
 
 def check_level_privileges(level, request):
@@ -68,7 +68,10 @@ def levels(level):
     if level == 'level1':
         return render_template(f'levels/{level}.html', password=PASSWORDS['level2'])
     elif check_level_privileges(level, request):
-        if level == 'level7':
+        if level == 'level6':
+            port = os.environ.get('PORT', 5000)
+            return render_template(f'levels/{level}.html', port=port)
+        elif level == 'level7':
             return render_template(f'levels/{level}.html', password=PASSWORDS['level7'])
         return render_template(f'levels/{level}.html')
 
@@ -131,8 +134,33 @@ def level6_capture():
         else:
             return {'success': False, 'message': 'URL is missing!'}
 
-    
     abort(403)
+
+@app.route('/level7_password')
+def level7_password():
+    if 'X-Forwarded-For' not in request.headers:
+        return {'success': True, 'password': PASSWORDS['level7']}
+    abort(403)
+
+@app.route('/robots.txt')
+def robots():
+    robots_data = open('robots.txt', 'r').read()
+    return Response(robots_data, mimetype='text/plain')
+    
+
+
+@app.route('/7_ZIP')
+def level7_zip():
+    if check_level_privileges('level7', request):
+        return send_from_directory(DOWNLOADS_DIR, 'level7.zip', as_attachment=True)
+    abort(403)
+
+@app.route('/7_README')
+def level7_readme():
+    if check_level_privileges('level7', request):
+        return send_from_directory(DOWNLOADS_DIR, '7_README.txt', as_attachment=True)
+    abort(403)
+
 
 @app.route('/captures/<file>')
 def capture(file):
