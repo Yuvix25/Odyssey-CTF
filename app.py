@@ -144,8 +144,10 @@ def level7_password():
 
 @app.route('/robots.txt')
 def robots():
-    robots_data = open('robots.txt', 'r').read()
-    return Response(robots_data, mimetype='text/plain')
+    if check_level_privileges('level7', request):
+        robots_data = open('robots.txt', 'r').read()
+        return Response(robots_data, mimetype='text/plain')
+    abort(403)
     
 
 
