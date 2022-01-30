@@ -13,8 +13,6 @@
         <script src="{{ url_for('static', filename='levels/level6.js') }}"></script>
 
         <h2>Level 6</h2>
-        <h4>6... That's a pretty high number. I hope you aren't a robot if you made it that far! 🤖</h4>
-        <hr>
         <form onsubmit="urlCapture(event)" action="javascript:void(0);">
             <label for="url">Capture URL:</label>
             <input type="text" id="url" name="url" style="width: 400px;">
@@ -23,8 +21,5 @@
         <p id="message"></p>
         <h3>Result:</h3>
         <img id='img' width="500"></img>
-
-        <br>
-        <p>(BTW, the server is listening on: <a href="http://127.0.0.1:{{port}}">http://127.0.0.1:{{port}}</a> )</p>
     </body>
 </html>

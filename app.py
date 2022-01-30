@@ -136,18 +136,18 @@ def level6_capture():
 
     abort(403)
 
-@app.route('/level7_password')
-def level7_password():
-    if 'X-Forwarded-For' not in request.headers:
-        return {'success': True, 'password': PASSWORDS['level7']}
-    abort(403)
+# @app.route('/level7_password')
+# def level7_password():
+#     if 'X-Forwarded-For' not in request.headers:
+#         return {'success': True, 'password': PASSWORDS['level7']}
+#     abort(403)
 
-@app.route('/robots.txt')
-def robots():
-    if check_level_privileges('level7', request):
-        robots_data = open('robots.txt', 'r').read()
-        return Response(robots_data, mimetype='text/plain')
-    abort(403)
+# @app.route('/robots.txt')
+# def robots():
+#     if check_level_privileges('level7', request):
+#         robots_data = open('robots.txt', 'r').read()
+#         return Response(robots_data, mimetype='text/plain')
+#     abort(403)
     
 
 
